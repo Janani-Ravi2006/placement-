@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Users, BookOpen, Briefcase, Calendar, Mail } from 'lucide-react';
+import { Users, BookOpen, Briefcase, Calendar, Mail, Menu, X } from 'lucide-react';
 
 export default function NECAlumniAssociation() {
   const [activeTab, setActiveTab] = useState('webinars');
   const [showAddForm, setShowAddForm] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState({
     companyName: '',
     jobRole: '',
@@ -46,7 +47,7 @@ export default function NECAlumniAssociation() {
     };
     
     return (
-      <span className={`px-4 py-2 rounded-xl text-xs font-black shadow-lg ${colors[color]}`}>
+      <span className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black shadow-lg ${colors[color]}`}>
         {badge}
       </span>
     );
@@ -91,95 +92,117 @@ export default function NECAlumniAssociation() {
       <header className="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white shadow-2xl overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-20"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-10 animate-pulse"></div>
-        <div className="container mx-auto px-6 py-12 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 relative z-10">
           <div className="flex items-center justify-between">
-            <div className="space-y-2">
-              <h1 className="text-5xl font-black tracking-tight bg-gradient-to-r from-white to-indigo-100 bg-clip-text text-transparent">
+            <div className="space-y-2 flex-1">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight bg-gradient-to-r from-white to-indigo-100 bg-clip-text text-transparent">
                 NEC Alumni Association
               </h1>
-              <p className="mt-3 text-indigo-100 text-xl font-light tracking-wide">
+              <p className="mt-2 sm:mt-3 text-indigo-100 text-sm sm:text-base md:text-lg lg:text-xl font-light tracking-wide">
                 Connecting Generations, Building Futures ✨
               </p>
             </div>
-            <div className="flex gap-4">
-              <button className="px-8 py-3 bg-white text-indigo-600 rounded-xl font-bold hover:bg-indigo-50 transition-all shadow-2xl hover:scale-105 transform">
+            
+            {/* Desktop Buttons */}
+            <div className="hidden md:flex gap-4">
+              <button className="px-6 lg:px-8 py-3 bg-white text-indigo-600 rounded-xl font-bold hover:bg-indigo-50 transition-all shadow-2xl hover:scale-105 transform">
                 Login
               </button>
-              <button className="px-8 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl font-bold hover:shadow-2xl transition-all border-2 border-white hover:scale-105 transform">
+              <button className="px-6 lg:px-8 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl font-bold hover:shadow-2xl transition-all border-2 border-white hover:scale-105 transform">
                 Register
               </button>
             </div>
+            
+            {/* Mobile Menu Button */}
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors"
+            >
+              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
           </div>
+          
+          {/* Mobile Menu Dropdown */}
+          {mobileMenuOpen && (
+            <div className="md:hidden mt-6 space-y-3 animate-fadeIn">
+              <button className="w-full px-6 py-3 bg-white text-indigo-600 rounded-xl font-bold hover:bg-indigo-50 transition-all shadow-2xl">
+                Login
+              </button>
+              <button className="w-full px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl font-bold hover:shadow-2xl transition-all border-2 border-white">
+                Register
+              </button>
+            </div>
+          )}
         </div>
       </header>
 
       {/* Navigation Tabs */}
       <div className="relative bg-white/90 backdrop-blur-lg shadow-xl sticky top-0 z-10 border-b-2 border-indigo-100">
-        <div className="container mx-auto px-6">
-          <nav className="flex gap-3">
+        <div className="container mx-auto px-4 sm:px-6">
+          <nav className="flex gap-1 sm:gap-3 overflow-x-auto scrollbar-hide">
             <button
               onClick={() => setActiveTab('webinars')}
-              className={`flex items-center gap-3 px-8 py-5 font-bold transition-all transform hover:scale-105 ${
+              className={`flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-4 sm:py-5 font-bold transition-all transform hover:scale-105 whitespace-nowrap ${
                 activeTab === 'webinars'
                   ? 'text-indigo-600 border-b-4 border-indigo-600 bg-gradient-to-b from-indigo-50 to-transparent shadow-lg'
                   : 'text-gray-600 hover:text-indigo-600 hover:bg-gray-50/50'
               }`}
             >
-              <BookOpen size={22} />
-              <span className="text-lg">Webinars</span>
+              <BookOpen size={20} className="sm:w-[22px] sm:h-[22px]" />
+              <span className="text-base sm:text-lg">Webinars</span>
             </button>
             <button
               onClick={() => setActiveTab('mentorship')}
-              className={`flex items-center gap-3 px-8 py-5 font-bold transition-all transform hover:scale-105 ${
+              className={`flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-4 sm:py-5 font-bold transition-all transform hover:scale-105 whitespace-nowrap ${
                 activeTab === 'mentorship'
                   ? 'text-purple-600 border-b-4 border-purple-600 bg-gradient-to-b from-purple-50 to-transparent shadow-lg'
                   : 'text-gray-600 hover:text-purple-600 hover:bg-gray-50/50'
               }`}
             >
-              <Users size={22} />
-              <span className="text-lg">Mentorship</span>
+              <Users size={20} className="sm:w-[22px] sm:h-[22px]" />
+              <span className="text-base sm:text-lg">Mentorship</span>
             </button>
             <button
               onClick={() => setActiveTab('placement')}
-              className={`flex items-center gap-3 px-8 py-5 font-bold transition-all transform hover:scale-105 ${
+              className={`flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-4 sm:py-5 font-bold transition-all transform hover:scale-105 whitespace-nowrap ${
                 activeTab === 'placement'
                   ? 'text-pink-600 border-b-4 border-pink-600 bg-gradient-to-b from-pink-50 to-transparent shadow-lg'
                   : 'text-gray-600 hover:text-pink-600 hover:bg-gray-50/50'
               }`}
             >
-              <Briefcase size={22} />
-              <span className="text-lg">Placement</span>
+              <Briefcase size={20} className="sm:w-[22px] sm:h-[22px]" />
+              <span className="text-base sm:text-lg">Placement</span>
             </button>
           </nav>
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="relative container mx-auto px-6 py-12">
+      <main className="relative container mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Webinars Tab */}
         {activeTab === 'webinars' && (
           <div className="space-y-8 animate-fadeIn">
-            <div className="flex items-center justify-between mb-10">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-10 gap-4">
               <div>
-                <h2 className="text-4xl font-black text-white mb-2">Upcoming Webinars 🎓</h2>
-                <p className="text-indigo-200 text-lg font-medium">Engage with alumni-led sessions on technology, innovation, and career insights</p>
+                <h2 className="text-3xl sm:text-4xl font-black text-white mb-2">Upcoming Webinars 🎓</h2>
+                <p className="text-indigo-200 text-base sm:text-lg font-medium">Engage with alumni-led sessions on technology, innovation, and career insights</p>
               </div>
-              <button className="px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-2xl font-bold hover:shadow-2xl transition-all transform hover:scale-105 shadow-xl">
+              <button className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-2xl font-bold hover:shadow-2xl transition-all transform hover:scale-105 shadow-xl whitespace-nowrap">
                 Schedule New Webinar
               </button>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {webinars.map((webinar, idx) => (
-                <div key={idx} className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl transition-shadow p-8 border-2 border-indigo-100">
+                <div key={idx} className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl transition-shadow p-6 sm:p-8 border-2 border-indigo-100">
                   <div className="flex items-start justify-between mb-6">
-                    <div className="p-4 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-2xl shadow-lg">
-                      <Calendar className="text-white" size={28} />
+                    <div className="p-3 sm:p-4 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-2xl shadow-lg">
+                      <Calendar className="text-white" size={24} />
                     </div>
                     <StatusBadge badge={webinar.badge} color={webinar.color} />
                   </div>
-                  <h3 className="text-2xl font-black text-gray-800 mb-4">{webinar.title}</h3>
-                  <p className="text-gray-600 text-base mb-6 font-medium">Interactive session with industry experts</p>
+                  <h3 className="text-xl sm:text-2xl font-black text-gray-800 mb-4">{webinar.title}</h3>
+                  <p className="text-gray-600 text-sm sm:text-base mb-6 font-medium">Interactive session with industry experts</p>
                   <button className="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-xl font-bold hover:shadow-xl transition-all transform hover:scale-105">
                     View Details
                   </button>
@@ -192,26 +215,26 @@ export default function NECAlumniAssociation() {
         {/* Mentorship Tab */}
         {activeTab === 'mentorship' && (
           <div className="space-y-8 animate-fadeIn">
-            <div className="flex items-center justify-between mb-10">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-10 gap-4">
               <div>
-                <h2 className="text-4xl font-black text-white mb-2">Mentorship Program 👥</h2>
-                <p className="text-purple-200 text-lg font-medium">Connect with alumni mentors for career guidance and skill-building opportunities</p>
+                <h2 className="text-3xl sm:text-4xl font-black text-white mb-2">Mentorship Program 👥</h2>
+                <p className="text-purple-200 text-base sm:text-lg font-medium">Connect with alumni mentors for career guidance and skill-building opportunities</p>
               </div>
-              <button className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-2xl font-bold hover:shadow-2xl transition-all transform hover:scale-105 shadow-xl">
+              <button className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-2xl font-bold hover:shadow-2xl transition-all transform hover:scale-105 shadow-xl whitespace-nowrap">
                 Find a Mentor
               </button>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {mentorships.map((mentor, idx) => (
-                <div key={idx} className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl transition-shadow p-8 border-2 border-purple-100">
-                  <div className="flex items-center gap-5 mb-6">
-                    <div className="w-20 h-20 bg-gradient-to-br from-purple-400 via-pink-400 to-rose-400 rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-lg">
+                <div key={idx} className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl transition-shadow p-6 sm:p-8 border-2 border-purple-100">
+                  <div className="flex items-center gap-4 sm:gap-5 mb-6">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-purple-400 via-pink-400 to-rose-400 rounded-2xl flex items-center justify-center text-white font-black text-xl sm:text-2xl shadow-lg flex-shrink-0">
                       {mentor.name.split(' ').map(n => n[0]).join('')}
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-black text-gray-800">{mentor.name}</h3>
-                      <p className="text-base text-gray-600 font-medium">{mentor.role}</p>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg sm:text-xl font-black text-gray-800 truncate">{mentor.name}</h3>
+                      <p className="text-sm sm:text-base text-gray-600 font-medium">{mentor.role}</p>
                     </div>
                   </div>
                   <StatusBadge badge={mentor.badge} color={mentor.color} />
@@ -231,34 +254,34 @@ export default function NECAlumniAssociation() {
           <div className="space-y-8 animate-fadeIn">
             {!showAddForm ? (
               <>
-                <div className="flex items-center justify-between mb-10">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-10 gap-4">
                   <div>
-                    <h2 className="text-4xl font-black text-white mb-2">Placement Tracker 💼</h2>
-                    <p className="text-pink-200 text-lg font-medium">Explore placement drives, training sessions, and alumni support for job opportunities</p>
+                    <h2 className="text-3xl sm:text-4xl font-black text-white mb-2">Placement Tracker 💼</h2>
+                    <p className="text-pink-200 text-base sm:text-lg font-medium">Explore placement drives, training sessions, and alumni support for job opportunities</p>
                   </div>
                   <button 
                     onClick={() => setShowAddForm(true)}
-                    className="px-8 py-4 bg-gradient-to-r from-pink-500 to-rose-600 text-white rounded-2xl font-bold hover:shadow-2xl transition-all transform hover:scale-105 shadow-xl">
+                    className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-pink-500 to-rose-600 text-white rounded-2xl font-bold hover:shadow-2xl transition-all transform hover:scale-105 shadow-xl whitespace-nowrap">
                     Add New Application
                   </button>
                 </div>
                 
-                <div className="grid md:grid-cols-2 gap-8">
+                <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
                   {placements.map((placement, idx) => (
-                    <div key={idx} className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl transition-shadow p-8 border-2 border-pink-100">
-                      <div className="flex items-center justify-between mb-6">
+                    <div key={idx} className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl transition-shadow p-6 sm:p-8 border-2 border-pink-100">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
                         <div className="flex items-center gap-4">
-                          <div className="w-16 h-16 bg-gradient-to-br from-pink-400 via-rose-400 to-red-400 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-lg">
+                          <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-pink-400 via-rose-400 to-red-400 rounded-2xl flex items-center justify-center text-white font-black text-lg sm:text-xl shadow-lg flex-shrink-0">
                             {placement.name.split(' ').map(n => n[0]).join('')}
                           </div>
-                          <div>
-                            <h3 className="text-xl font-black text-gray-800">{placement.name}</h3>
-                            <p className="text-base text-gray-600 font-medium">{placement.company}</p>
+                          <div className="min-w-0 flex-1">
+                            <h3 className="text-lg sm:text-xl font-black text-gray-800 truncate">{placement.name}</h3>
+                            <p className="text-sm sm:text-base text-gray-600 font-medium truncate">{placement.company}</p>
                           </div>
                         </div>
                         <StatusBadge badge={placement.badge} color={placement.color} />
                       </div>
-                      <div className="flex gap-3 mt-6">
+                      <div className="flex flex-col sm:flex-row gap-3 mt-6">
                         <button className="flex-1 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl font-bold hover:shadow-xl transition-all transform hover:scale-105">
                           View Profile
                         </button>
@@ -272,16 +295,16 @@ export default function NECAlumniAssociation() {
               </>
             ) : (
               <div className="max-w-4xl mx-auto">
-                <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-10 border-2 border-pink-100">
+                <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-6 sm:p-10 border-2 border-pink-100">
                   <div className="flex items-center gap-4 mb-8">
-                    <div className="p-4 bg-gradient-to-br from-pink-500 to-rose-500 rounded-2xl shadow-lg">
-                      <Briefcase className="text-white" size={32} />
+                    <div className="p-3 sm:p-4 bg-gradient-to-br from-pink-500 to-rose-500 rounded-2xl shadow-lg">
+                      <Briefcase className="text-white" size={28} />
                     </div>
-                    <h2 className="text-3xl font-black text-gray-800">Add New Company</h2>
+                    <h2 className="text-2xl sm:text-3xl font-black text-gray-800">Add New Company</h2>
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
+                    <div className="grid sm:grid-cols-2 gap-6">
                       <div>
                         <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-2">
                           <Briefcase size={16} className="text-indigo-600" />
@@ -315,7 +338,7 @@ export default function NECAlumniAssociation() {
                       </div>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-6">
+                    <div className="grid sm:grid-cols-2 gap-6">
                       <div>
                         <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-2">
                           <BookOpen size={16} className="text-purple-600" />
@@ -382,7 +405,7 @@ export default function NECAlumniAssociation() {
 
                     <div>
                       <label className="text-sm font-bold text-gray-700 mb-3 block">Company Poster</label>
-                      <div className="border-4 border-dashed border-indigo-200 rounded-2xl p-12 text-center bg-gradient-to-br from-indigo-50 to-purple-50 hover:border-indigo-400 transition-all">
+                      <div className="border-4 border-dashed border-indigo-200 rounded-2xl p-8 sm:p-12 text-center bg-gradient-to-br from-indigo-50 to-purple-50 hover:border-indigo-400 transition-all">
                         <input
                           type="file"
                           accept="image/*"
@@ -392,11 +415,11 @@ export default function NECAlumniAssociation() {
                         />
                         <label htmlFor="poster-upload" className="cursor-pointer">
                           <div className="flex flex-col items-center gap-3">
-                            <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
-                              <Calendar className="text-white" size={32} />
+                            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
+                              <Calendar className="text-white" size={28} />
                             </div>
-                            <p className="text-xl font-black text-gray-800">Company Poster</p>
-                            <p className="text-sm text-gray-600 font-medium">
+                            <p className="text-lg sm:text-xl font-black text-gray-800">Company Poster</p>
+                            <p className="text-xs sm:text-sm text-gray-600 font-medium px-4">
                               {formData.companyPoster ? formData.companyPoster.name : 'Drag and drop or click to upload'}
                             </p>
                           </div>
@@ -404,7 +427,7 @@ export default function NECAlumniAssociation() {
                       </div>
                     </div>
 
-                    <div className="flex gap-4 pt-6">
+                    <div className="flex flex-col sm:flex-row gap-4 pt-6">
                       <button
                         type="button"
                         onClick={() => setShowAddForm(false)}
@@ -428,26 +451,26 @@ export default function NECAlumniAssociation() {
       </main>
 
       {/* Footer */}
-      <footer className="relative bg-gradient-to-r from-gray-900 via-indigo-900 to-purple-900 text-white mt-20 border-t-4 border-indigo-500">
-        <div className="container mx-auto px-6 py-12">
-          <div className="grid md:grid-cols-3 gap-8">
+      <footer className="relative bg-gradient-to-r from-gray-900 via-indigo-900 to-purple-900 text-white mt-12 sm:mt-20 border-t-4 border-indigo-500">
+        <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-2xl font-black mb-4 bg-gradient-to-r from-indigo-300 to-pink-300 bg-clip-text text-transparent">
+              <h3 className="text-xl sm:text-2xl font-black mb-4 bg-gradient-to-r from-indigo-300 to-pink-300 bg-clip-text text-transparent">
                 NEC Alumni Association
               </h3>
-              <p className="text-gray-300 font-medium">Building bridges between past, present, and future generations of NEC students.</p>
+              <p className="text-gray-300 font-medium text-sm sm:text-base">Building bridges between past, present, and future generations of NEC students.</p>
             </div>
             <div>
-              <h4 className="font-black text-lg mb-4 text-indigo-300">Quick Links</h4>
-              <ul className="space-y-2 text-gray-300 font-medium">
+              <h4 className="font-black text-base sm:text-lg mb-4 text-indigo-300">Quick Links</h4>
+              <ul className="space-y-2 text-gray-300 font-medium text-sm sm:text-base">
                 <li><a href="#" className="hover:text-indigo-300 transition-colors">About Us</a></li>
                 <li><a href="#" className="hover:text-indigo-300 transition-colors">Events</a></li>
                 <li><a href="#" className="hover:text-indigo-300 transition-colors">Success Stories</a></li>
                 <li><a href="#" className="hover:text-indigo-300 transition-colors">Contact</a></li>
               </ul>
             </div>
-            <div>
-              <h4 className="font-black text-lg mb-4 text-pink-300">Connect With Us</h4>
+            <div className="sm:col-span-2 lg:col-span-1">
+              <h4 className="font-black text-base sm:text-lg mb-4 text-pink-300">Connect With Us</h4>
               <div className="flex gap-4">
                 <button className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl hover:shadow-lg hover:scale-110 transition-all flex items-center justify-center">
                   <Mail size={22} />
@@ -455,11 +478,34 @@ export default function NECAlumniAssociation() {
               </div>
             </div>
           </div>
-          <div className="border-t-2 border-indigo-800 mt-8 pt-8 text-center text-gray-300 font-medium">
+          <div className="border-t-2 border-indigo-800 mt-8 pt-8 text-center text-gray-300 font-medium text-sm sm:text-base">
             <p>© 2024 NEC Alumni Association. All rights reserved. Made with ❤️</p>
           </div>
         </div>
       </footer>
+
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.5s ease-out;
+        }
+      `}</style>
     </div>
   );
 }
