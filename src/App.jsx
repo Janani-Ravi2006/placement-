@@ -1,10 +1,29 @@
 import React, { useState } from 'react';
-import { Users, BookOpen, Briefcase, Calendar, Mail, Menu, X } from 'lucide-react';
+import { Users, BookOpen, Briefcase, Calendar, Mail, Menu, X, Lock, Eye, EyeOff, User } from 'lucide-react';
 
 export default function NECAlumniAssociation() {
+  const [currentPage, setCurrentPage] = useState('home'); // 'home', 'login', 'register'
   const [activeTab, setActiveTab] = useState('webinars');
   const [showAddForm, setShowAddForm] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: ''
+  });
+  
+  const [registerData, setRegisterData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    graduationYear: '',
+    department: '',
+    password: '',
+    confirmPassword: ''
+  });
+
   const [formData, setFormData] = useState({
     companyName: '',
     jobRole: '',
@@ -81,6 +100,317 @@ export default function NECAlumniAssociation() {
     });
   };
 
+  // 🔥 Common Input Handler for Login + Register
+  const handleAuthInputChange = (e) => {
+    const { name, value } = e.target;
+    if (currentPage === 'login') {
+      setLoginData({ ...loginData, [name]: value });
+    } else {
+      setRegisterData({ ...registerData, [name]: value });
+    }
+  };
+
+  // LOGIN SUBMIT
+  const handleLogin = (e) => {
+    e.preventDefault();
+    console.log("Login Data:", loginData);
+    setCurrentPage("home");
+  };
+
+  // REGISTER SUBMIT
+  const handleRegister = (e) => {
+    e.preventDefault();
+    console.log("Register Data:", registerData);
+    setCurrentPage("home");
+  };
+
+  // Login Page
+  if (currentPage === 'login') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:50px_50px]"></div>
+        </div>
+        
+        <div className="w-full max-w-md relative z-10">
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border-2 border-indigo-100">
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl">
+                <Lock className="text-white" size={40} />
+              </div>
+              <h1 className="text-3xl font-black text-gray-800 mb-2">Welcome Back!</h1>
+              <p className="text-gray-600 font-medium">Login to NEC Alumni Association</p>
+            </div>
+
+            <form onSubmit={handleLogin} className="space-y-6">
+              <div>
+                <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-2">
+                  <Mail size={16} className="text-indigo-600" />
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={loginData.email}
+                  onChange={handleAuthInputChange}
+                  placeholder="Enter your email"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-indigo-500 focus:outline-none font-medium"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-2">
+                  <Lock size={16} className="text-indigo-600" />
+                  Password
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={loginData.password}
+                    onChange={handleAuthInputChange}
+                    placeholder="Enter your password"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-indigo-500 focus:outline-none font-medium pr-12"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-indigo-600"
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-bold hover:shadow-xl transition-all transform hover:scale-105"
+              >
+                Login
+              </button>
+            </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-gray-600 font-medium">
+                Don't have an account?{' '}
+                <button
+                  onClick={() => setCurrentPage('register')}
+                  className="text-indigo-600 font-bold hover:text-purple-600 transition-colors"
+                >
+                  Register here
+                </button>
+              </p>
+            </div>
+
+            <button
+              onClick={() => setCurrentPage('home')}
+              className="mt-4 w-full py-3 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-all"
+            >
+              Back to Home
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Register Page
+  if (currentPage === 'register') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:50px_50px]"></div>
+        </div>
+        
+        <div className="w-full max-w-2xl relative z-10">
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border-2 border-pink-100">
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl">
+                <User className="text-white" size={40} />
+              </div>
+              <h1 className="text-3xl font-black text-gray-800 mb-2">Join Our Community!</h1>
+              <p className="text-gray-600 font-medium">Register for NEC Alumni Association</p>
+            </div>
+
+            <form onSubmit={handleRegister} className="space-y-6">
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-2">
+                    <User size={16} className="text-pink-600" />
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    name="fullName"
+                    value={registerData.fullName}
+                    onChange={handleAuthInputChange}
+                    placeholder="Enter your full name"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-500 focus:outline-none font-medium"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-2">
+                    <Mail size={16} className="text-pink-600" />
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={registerData.email}
+                    onChange={handleAuthInputChange}
+                    placeholder="Enter your email"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-500 focus:outline-none font-medium"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-2">
+                    <BookOpen size={16} className="text-pink-600" />
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={registerData.phone}
+                    onChange={handleAuthInputChange}
+                    placeholder="Enter your phone number"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-500 focus:outline-none font-medium"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-2">
+                    <Users size={16} className="text-pink-600" />
+                    Department
+                  </label>
+                  <select
+                    name="department"
+                    value={registerData.department}
+                    onChange={handleAuthInputChange}
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-500 focus:outline-none font-medium"
+                    required
+                  >
+                    <option value="">Select Department</option>
+                    <option value="CSE">Computer Science</option>
+                    <option value="ECE">Electronics & Communication</option>
+                    <option value="IT">Information Technology</option>
+                    <option value="MECH">Mechanical</option>
+                    <option value="CIVIL">Civil</option>
+                    <option value="EEE">Electrical</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-2">
+                    <Calendar size={16} className="text-pink-600" />
+                    Graduation Year
+                  </label>
+                  <input
+                    type="number"
+                    name="graduationYear"
+                    value={registerData.graduationYear}
+                    onChange={handleAuthInputChange}
+                    placeholder="e.g., 2024"
+                    min="1990"
+                    max="2030"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-500 focus:outline-none font-medium"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-2">
+                    <Lock size={16} className="text-pink-600" />
+                    Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      value={registerData.password}
+                      onChange={handleAuthInputChange}
+                      placeholder="Create password"
+                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-500 focus:outline-none font-medium pr-12"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-pink-600"
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-2">
+                  <Lock size={16} className="text-pink-600" />
+                  Confirm Password
+                </label>
+                <div className="relative">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    value={registerData.confirmPassword}
+                    onChange={handleAuthInputChange}
+                    placeholder="Confirm your password"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-500 focus:outline-none font-medium pr-12"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-pink-600"
+                  >
+                    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-4 bg-gradient-to-r from-pink-500 to-rose-600 text-white rounded-xl font-bold hover:shadow-xl transition-all transform hover:scale-105"
+              >
+                Register
+              </button>
+            </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-gray-600 font-medium">
+                Already have an account?{' '}
+                <button
+                  onClick={() => setCurrentPage('login')}
+                  className="text-pink-600 font-bold hover:text-rose-600 transition-colors"
+                >
+                  Login here
+                </button>
+              </p>
+            </div>
+
+            <button
+              onClick={() => setCurrentPage('home')}
+              className="mt-4 w-full py-3 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-all"
+            >
+              Back to Home
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
       {/* Animated Background Pattern */}
@@ -105,14 +435,18 @@ export default function NECAlumniAssociation() {
             
             {/* Desktop Buttons */}
             <div className="hidden md:flex gap-4">
-              <button className="px-6 lg:px-8 py-3 bg-white text-indigo-600 rounded-xl font-bold hover:bg-indigo-50 transition-all shadow-2xl hover:scale-105 transform">
+              <button 
+                onClick={() => setCurrentPage('login')}
+                className="px-6 lg:px-8 py-3 bg-white text-indigo-600 rounded-xl font-bold hover:bg-indigo-50 transition-all shadow-2xl hover:scale-105 transform">
                 Login
               </button>
-              <button className="px-6 lg:px-8 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl font-bold hover:shadow-2xl transition-all border-2 border-white hover:scale-105 transform">
+              <button 
+                onClick={() => setCurrentPage('register')}
+                className="px-6 lg:px-8 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl font-bold hover:shadow-2xl transition-all border-2 border-white hover:scale-105 transform">
                 Register
               </button>
             </div>
-            
+
             {/* Mobile Menu Button */}
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -125,10 +459,20 @@ export default function NECAlumniAssociation() {
           {/* Mobile Menu Dropdown */}
           {mobileMenuOpen && (
             <div className="md:hidden mt-6 space-y-3 animate-fadeIn">
-              <button className="w-full px-6 py-3 bg-white text-indigo-600 rounded-xl font-bold hover:bg-indigo-50 transition-all shadow-2xl">
+              <button 
+                onClick={() => {
+                  setCurrentPage('login');
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full px-6 py-3 bg-white text-indigo-600 rounded-xl font-bold hover:bg-indigo-50 transition-all shadow-2xl">
                 Login
               </button>
-              <button className="w-full px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl font-bold hover:shadow-2xl transition-all border-2 border-white">
+              <button 
+                onClick={() => {
+                  setCurrentPage('register');
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl font-bold hover:shadow-2xl transition-all border-2 border-white">
                 Register
               </button>
             </div>
