@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, BookOpen, Briefcase, Calendar, Mail, Menu, X, Lock, Eye, EyeOff, User, Search, Bell, ChevronDown, ChevronLeft, ChevronRight, BarChart3, Mic2, CheckCircle, XCircle, Clock, PlayCircle, Video, Eye as EyeIcon } from 'lucide-react';
+import { Users, BookOpen, Briefcase, Calendar, Mail, Menu, X, Lock, Eye, EyeOff, User, Search, Bell, ChevronDown, ChevronLeft, ChevronRight, BarChart3, Mic2, CheckCircle, XCircle, Clock, PlayCircle, Video, Eye as EyeIcon, TrendingUp, Target, Award, Star, MessageCircle, Phone, MapPin, ExternalLink, Filter, Download, Share2, Heart, Bookmark, Zap, Crown, Rocket, GraduationCap } from 'lucide-react';
 import { FaLinkedin, FaGoogle } from "react-icons/fa";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
@@ -13,6 +13,12 @@ export default function NECAlumniAssociation() {
   const [userDropdown, setUserDropdown] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [dashboardView, setDashboardView] = useState('overview');
+  const [mentorshipStats, setMentorshipStats] = useState({
+    activeMentors: 12,
+    totalSessions: 156,
+    successRate: 92,
+    avgRating: 4.8
+  });
   
   const [loginData, setLoginData] = useState({
     email: '',
@@ -59,7 +65,9 @@ export default function NECAlumniAssociation() {
       category: 'Technology',
       duration: '60 mins',
       description: 'Exploring the applications of AI in healthcare and medical diagnostics.',
-      views: 1247
+      views: 1247,
+      thumbnail: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+      tags: ['AI', 'Healthcare', 'Technology']
     },
     { 
       id: 2,
@@ -74,7 +82,9 @@ export default function NECAlumniAssociation() {
       category: 'Career',
       duration: '45 mins',
       description: 'A comprehensive guide to building a career in data science.',
-      views: 892
+      views: 892,
+      thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+      tags: ['Data Science', 'Career', 'Roadmap']
     },
     { 
       id: 3,
@@ -89,7 +99,9 @@ export default function NECAlumniAssociation() {
       category: 'Technology',
       duration: '75 mins',
       description: 'Latest trends and threats in cybersecurity landscape.',
-      views: 756
+      views: 756,
+      thumbnail: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+      tags: ['Cybersecurity', 'Trends', 'Security']
     },
     { 
       id: 4,
@@ -104,7 +116,9 @@ export default function NECAlumniAssociation() {
       category: 'Technology',
       duration: '90 mins',
       description: 'Modern full stack development with latest frameworks.',
-      views: 1563
+      views: 1563,
+      thumbnail: 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+      tags: ['Full Stack', 'Development', 'Web']
     },
     { 
       id: 5,
@@ -119,7 +133,9 @@ export default function NECAlumniAssociation() {
       category: 'Technology',
       duration: '60 mins',
       description: 'Understanding the basics of blockchain technology.',
-      views: 234
+      views: 234,
+      thumbnail: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+      tags: ['Blockchain', 'Fundamentals', 'Crypto']
     },
     { 
       id: 6,
@@ -134,7 +150,133 @@ export default function NECAlumniAssociation() {
       category: 'Leadership',
       duration: '60 mins',
       description: 'Developing leadership skills in technology organizations.',
-      views: 189
+      views: 189,
+      thumbnail: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+      tags: ['Leadership', 'Management', 'Tech']
+    }
+  ];
+
+  // Enhanced mentorship data
+  const mentorships = [
+    { 
+      id: 1,
+      name: 'Dr. A. Ramesh', 
+      role: 'Professor, Dept. of CSE', 
+      status: 'meetings', 
+      badge: 'MEETINGS: 3', 
+      color: 'blue',
+      expertise: ['AI/ML', 'Research', 'Career Guidance'],
+      experience: '15+ years',
+      rating: 4.9,
+      sessions: 42,
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
+      availability: 'Mon, Wed, Fri',
+      responseTime: '2-4 hours'
+    },
+    { 
+      id: 2,
+      name: 'M. Kavitha Devi', 
+      role: 'Senior Engineer, Dept. of ECE', 
+      status: 'meetings', 
+      badge: 'MEETINGS: 2', 
+      color: 'rose',
+      expertise: ['Embedded Systems', 'IoT', 'VLSI'],
+      experience: '12 years',
+      rating: 4.7,
+      sessions: 28,
+      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
+      availability: 'Tue, Thu, Sat',
+      responseTime: '1-3 hours'
+    },
+    { 
+      id: 3,
+      name: 'S. Rajendran', 
+      role: 'CTO, Tech Solutions', 
+      status: 'available', 
+      badge: 'AVAILABLE', 
+      color: 'emerald',
+      expertise: ['Startups', 'Leadership', 'Product Management'],
+      experience: '20+ years',
+      rating: 4.8,
+      sessions: 65,
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
+      availability: 'Flexible',
+      responseTime: '4-6 hours'
+    },
+    { 
+      id: 4,
+      name: 'Priya Venkatesh', 
+      role: 'Data Scientist, Google', 
+      status: 'busy', 
+      badge: 'BUSY', 
+      color: 'amber',
+      expertise: ['Data Science', 'ML Ops', 'Python'],
+      experience: '8 years',
+      rating: 4.6,
+      sessions: 31,
+      avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
+      availability: 'Weekends',
+      responseTime: '6-12 hours'
+    }
+  ];
+
+  // Enhanced placements data
+  const placements = [
+    { 
+      id: 1,
+      name: 'Ashini Sharma', 
+      company: 'Google - Bangalore', 
+      status: 'offered', 
+      badge: 'OFFERED', 
+      color: 'emerald',
+      package: '₹32 LPA',
+      role: 'Software Engineer',
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
+      progress: 100,
+      timeline: '2 months',
+      skills: ['React', 'Node.js', 'Python', 'AWS']
+    },
+    { 
+      id: 2,
+      name: 'Aditya Kumar', 
+      company: 'Tech Solutions', 
+      status: 'progress', 
+      badge: 'IN PROGRESS', 
+      color: 'blue',
+      package: '₹18 LPA',
+      role: 'Frontend Developer',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
+      progress: 65,
+      timeline: '1.5 months',
+      skills: ['JavaScript', 'React', 'CSS', 'UI/UX']
+    },
+    { 
+      id: 3,
+      name: 'Rohit Singh', 
+      company: 'Microsoft - Hyderabad', 
+      status: 'interview', 
+      badge: 'INTERVIEW', 
+      color: 'violet',
+      package: '₹28 LPA',
+      role: 'Data Engineer',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
+      progress: 40,
+      timeline: '1 month',
+      skills: ['SQL', 'Python', 'ETL', 'Azure']
+    },
+    { 
+      id: 4,
+      name: 'Meera Patel', 
+      company: 'Amazon - Chennai', 
+      status: 'applied', 
+      badge: 'APPLIED', 
+      color: 'amber',
+      package: '₹24 LPA',
+      role: 'Product Manager',
+      avatar: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
+      progress: 20,
+      timeline: '2 weeks',
+      skills: ['Product Strategy', 'Agile', 'Analytics', 'UX']
     }
   ];
 
@@ -148,7 +290,10 @@ export default function NECAlumniAssociation() {
     postponed: webinars.filter(w => w.status === 'postponed').length,
     rejected: webinars.filter(w => w.status === 'rejected').length,
     totalAttendees: webinars.reduce((sum, w) => sum + w.attendees, 0),
-    totalViews: webinars.reduce((sum, w) => sum + w.views, 0)
+    totalViews: webinars.reduce((sum, w) => sum + w.views, 0),
+    placementOffers: placements.filter(p => p.status === 'offered').length,
+    placementProgress: placements.filter(p => p.status === 'progress').length,
+    avgPackage: '₹25.5 LPA'
   };
 
   // Auto slide functionality
@@ -173,48 +318,6 @@ export default function NECAlumniAssociation() {
     setCurrentSlide(index);
   };
 
-  const mentorships = [
-    { 
-      name: 'Dr. A. Ramesh', 
-      role: 'Professor, Dept. of CSE', 
-      status: 'meetings', 
-      badge: 'MEETINGS: 3', 
-      color: 'blue',
-      expertise: ['AI/ML', 'Research', 'Career Guidance'],
-      experience: '15+ years'
-    },
-    { 
-      name: 'M. Kavitha Devi', 
-      role: 'Senior Engineer, Dept. of ECE', 
-      status: 'meetings', 
-      badge: 'MEETINGS: 2', 
-      color: 'rose',
-      expertise: ['Embedded Systems', 'IoT', 'VLSI'],
-      experience: '12 years'
-    }
-  ];
-
-  const placements = [
-    { 
-      name: 'Ashini Sharma', 
-      company: 'Google - Bangalore', 
-      status: 'offered', 
-      badge: 'OFFERED', 
-      color: 'cyan',
-      package: '₹32 LPA',
-      role: 'Software Engineer'
-    },
-    { 
-      name: 'Aditya Kumar', 
-      company: 'Tech Solutions', 
-      status: 'progress', 
-      badge: 'IN PROGRESS', 
-      color: 'blue',
-      package: '₹18 LPA',
-      role: 'Frontend Developer'
-    }
-  ];
-
   const StatusBadge = ({ badge, color }) => {
     const colors = {
       emerald: 'bg-emerald-100 text-emerald-800 border border-emerald-200',
@@ -234,7 +337,7 @@ export default function NECAlumniAssociation() {
     );
   };
 
-  const StatCard = ({ title, value, icon, color, subtitle }) => {
+  const StatCard = ({ title, value, icon, color, subtitle, trend }) => {
     const colors = {
       blue: 'from-blue-500 to-blue-600',
       green: 'from-green-500 to-green-600',
@@ -266,6 +369,12 @@ export default function NECAlumniAssociation() {
             {subtitle && (
               <p className="text-sm text-gray-500 mt-1">{subtitle}</p>
             )}
+            {trend && (
+              <div className={`flex items-center mt-2 text-sm ${trend > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                <TrendingUp size={16} className={trend > 0 ? '' : 'rotate-180'} />
+                <span className="ml-1">{Math.abs(trend)}% from last month</span>
+              </div>
+            )}
           </div>
           <div className={`p-4 rounded-xl bg-gradient-to-br ${colors[color]} text-white`}>
             {icon}
@@ -276,26 +385,36 @@ export default function NECAlumniAssociation() {
   };
 
   const WebinarCard = ({ webinar }) => (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-      {/* Card Header with Gradient */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4">
-        <div className="flex justify-between items-start">
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-white/20 rounded-lg">
-              <Video size={20} className="text-white" />
-            </div>
-            <div>
-              <h3 className="text-white font-bold text-lg">{webinar.title}</h3>
-              <p className="text-blue-100 text-sm">By {webinar.speaker}</p>
-            </div>
-          </div>
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
+      {/* Card Header with Thumbnail */}
+      <div className="relative h-48 overflow-hidden">
+        <img
+          src={webinar.thumbnail}
+          alt={webinar.title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div className="absolute top-4 right-4">
           <StatusBadge badge={webinar.badge} color={webinar.color} />
+        </div>
+        <div className="absolute bottom-4 left-4 right-4">
+          <h3 className="text-white font-bold text-lg line-clamp-1">{webinar.title}</h3>
+          <p className="text-blue-100 text-sm">By {webinar.speaker}</p>
         </div>
       </div>
       
       {/* Card Body */}
       <div className="p-6">
         <p className="text-gray-600 text-sm mb-4 line-clamp-2">{webinar.description}</p>
+        
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {webinar.tags.map((tag, index) => (
+            <span key={index} className="px-2 py-1 bg-blue-50 text-blue-600 text-xs rounded-full">
+              {tag}
+            </span>
+          ))}
+        </div>
         
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div className="flex items-center space-x-2 text-sm text-gray-600">
@@ -317,11 +436,150 @@ export default function NECAlumniAssociation() {
         </div>
         
         <div className="flex space-x-3">
-          <button className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg">
+          <button className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+            <PlayCircle size={18} />
             View Details
           </button>
           <button className="px-4 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
-            <Menu size={18} />
+            <Bookmark size={18} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const MentorCard = ({ mentor }) => (
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
+      {/* Card Header with Avatar */}
+      <div className="relative h-32 bg-gradient-to-r from-blue-500 to-indigo-600 p-6">
+        <div className="flex items-center space-x-4">
+          <div className="relative">
+            <img
+              src={mentor.avatar}
+              alt={mentor.name}
+              className="w-16 h-16 rounded-full border-4 border-white object-cover"
+            />
+            <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-1 border-2 border-white">
+              <div className="w-3 h-3 rounded-full"></div>
+            </div>
+          </div>
+          <div className="flex-1">
+            <h3 className="text-white font-bold text-lg">{mentor.name}</h3>
+            <p className="text-blue-100 text-sm">{mentor.role}</p>
+          </div>
+        </div>
+      </div>
+      
+      {/* Card Body */}
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-4">
+          <StatusBadge badge={mentor.badge} color={mentor.color} />
+          <div className="flex items-center space-x-1">
+            <Star size={16} className="text-amber-500 fill-current" />
+            <span className="text-sm font-semibold text-gray-700">{mentor.rating}</span>
+            <span className="text-xs text-gray-500">({mentor.sessions})</span>
+          </div>
+        </div>
+        
+        <p className="text-gray-600 text-sm mb-4">{mentor.experience} experience</p>
+        
+        {/* Expertise Tags */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {mentor.expertise.map((skill, index) => (
+            <span key={index} className="px-2 py-1 bg-blue-50 text-blue-600 text-xs rounded-full">
+              {skill}
+            </span>
+          ))}
+        </div>
+        
+        {/* Availability Info */}
+        <div className="grid grid-cols-2 gap-4 mb-4 text-xs text-gray-600">
+          <div className="flex items-center space-x-1">
+            <Calendar size={12} />
+            <span>{mentor.availability}</span>
+          </div>
+          <div className="flex items-center space-x-1">
+            <Clock size={12} />
+            <span>{mentor.responseTime}</span>
+          </div>
+        </div>
+        
+        <div className="flex space-x-3">
+          <button className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+            <MessageCircle size={16} />
+            Connect
+          </button>
+          <button className="px-4 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
+            <Phone size={16} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const PlacementCard = ({ placement }) => (
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
+      {/* Card Header */}
+      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <img
+              src={placement.avatar}
+              alt={placement.name}
+              className="w-12 h-12 rounded-full border-2 border-white object-cover"
+            />
+            <div>
+              <h3 className="text-white font-bold">{placement.name}</h3>
+              <p className="text-blue-100 text-sm">{placement.company}</p>
+            </div>
+          </div>
+          <StatusBadge badge={placement.badge} color={placement.color} />
+        </div>
+      </div>
+      
+      {/* Card Body */}
+      <div className="p-6">
+        <div className="mb-4">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm font-medium text-gray-700">Progress</span>
+            <span className="text-sm font-semibold text-blue-600">{placement.progress}%</span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2">
+            <div 
+              className="bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full" 
+              style={{ width: `${placement.progress}%` }}
+            ></div>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="text-center p-3 bg-blue-50 rounded-lg">
+            <div className="text-sm text-gray-600">Package</div>
+            <div className="font-bold text-gray-900 text-lg">{placement.package}</div>
+          </div>
+          <div className="text-center p-3 bg-blue-50 rounded-lg">
+            <div className="text-sm text-gray-600">Timeline</div>
+            <div className="font-bold text-gray-900 text-lg">{placement.timeline}</div>
+          </div>
+        </div>
+        
+        <div className="mb-4">
+          <p className="text-sm font-medium text-gray-700 mb-2">Role: {placement.role}</p>
+          <div className="flex flex-wrap gap-2">
+            {placement.skills.map((skill, index) => (
+              <span key={index} className="px-2 py-1 bg-green-50 text-green-600 text-xs rounded-full">
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+        
+        <div className="flex space-x-3">
+          <button className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg">
+            View Profile
+          </button>
+          <button className="px-4 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
+            <Share2 size={18} />
           </button>
         </div>
       </div>
@@ -458,11 +716,19 @@ export default function NECAlumniAssociation() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             <nav className="flex flex-col space-y-4">
-              <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">Home</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">Events</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">Alumni</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">Resources</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">About</a>
+           <a 
+  href="#" 
+  className="text-gray-700 hover:text-blue-600 font-medium"
+  onClick={(e) => {
+    e.preventDefault();
+    setCurrentPage('home');
+    setMobileMenuOpen(false);
+  }}
+>
+  Home
+</a>
+
+              
               <div className="pt-4 border-t border-gray-200">
                 {isLoggedIn ? (
                   <button 
@@ -831,7 +1097,8 @@ export default function NECAlumniAssociation() {
                   <BarChart3 size={18} />
                   {dashboardView === 'overview' ? 'Detailed View' : 'Overview'}
                 </button>
-                <button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg">
+                <button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2">
+                  <Rocket size={18} />
                   Schedule Webinar
                 </button>
               </div>
@@ -846,6 +1113,7 @@ export default function NECAlumniAssociation() {
                   icon={<BookOpen size={24} />} 
                   color="blue"
                   subtitle="All time webinars"
+                  trend={12}
                 />
                 <StatCard 
                   title="Total Speakers" 
@@ -853,6 +1121,7 @@ export default function NECAlumniAssociation() {
                   icon={<Mic2 size={24} />} 
                   color="indigo"
                   subtitle="Unique speakers"
+                  trend={8}
                 />
                 <StatCard 
                   title="Completed" 
@@ -860,6 +1129,7 @@ export default function NECAlumniAssociation() {
                   icon={<CheckCircle size={24} />} 
                   color="green"
                   subtitle="Successfully conducted"
+                  trend={15}
                 />
                 <StatCard 
                   title="Approved" 
@@ -867,20 +1137,7 @@ export default function NECAlumniAssociation() {
                   icon={<PlayCircle size={24} />} 
                   color="emerald"
                   subtitle="Scheduled webinars"
-                />
-                <StatCard 
-                  title="Planned" 
-                  value={dashboardMetrics.planned} 
-                  icon={<Calendar size={24} />} 
-                  color="amber"
-                  subtitle="Upcoming webinars"
-                />
-                <StatCard 
-                  title="Postponed" 
-                  value={dashboardMetrics.postponed} 
-                  icon={<Clock size={24} />} 
-                  color="violet"
-                  subtitle="Rescheduled events"
+                  trend={5}
                 />
                 <StatCard 
                   title="Total Attendees" 
@@ -888,6 +1145,7 @@ export default function NECAlumniAssociation() {
                   icon={<Users size={24} />} 
                   color="purple"
                   subtitle="All participants"
+                  trend={22}
                 />
                 <StatCard 
                   title="Total Views" 
@@ -895,13 +1153,30 @@ export default function NECAlumniAssociation() {
                   icon={<EyeIcon size={24} />} 
                   color="red"
                   subtitle="Content engagement"
+                  trend={18}
+                />
+                <StatCard 
+                  title="Planned" 
+                  value={dashboardMetrics.planned} 
+                  icon={<Calendar size={24} />} 
+                  color="amber"
+                  subtitle="Upcoming webinars"
+                  trend={10}
+                />
+                <StatCard 
+                  title="Postponed" 
+                  value={dashboardMetrics.postponed} 
+                  icon={<Clock size={24} />} 
+                  color="violet"
+                  subtitle="Rescheduled events"
+                  trend={-3}
                 />
               </div>
             )}
             
             {/* Webinar Cards */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {webinars.map((webinar, idx) => (
+              {webinars.map((webinar) => (
                 <WebinarCard key={webinar.id} webinar={webinar} />
               ))}
             </div>
@@ -916,38 +1191,52 @@ export default function NECAlumniAssociation() {
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Mentorship Program</h2>
                 <p className="text-gray-600">Connect with experienced alumni mentors for guidance</p>
               </div>
-              <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap">
+              <button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2">
+                <GraduationCap size={18} />
                 Find a Mentor
               </button>
             </div>
             
+            {/* Mentorship Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <StatCard 
+                title="Active Mentors" 
+                value={mentorshipStats.activeMentors} 
+                icon={<Users size={24} />} 
+                color="blue"
+                subtitle="Available for guidance"
+                trend={8}
+              />
+              <StatCard 
+                title="Total Sessions" 
+                value={mentorshipStats.totalSessions} 
+                icon={<MessageCircle size={24} />} 
+                color="green"
+                subtitle="Mentorship sessions"
+                trend={15}
+              />
+              <StatCard 
+                title="Success Rate" 
+                value={`${mentorshipStats.successRate}%`} 
+                icon={<Target size={24} />} 
+                color="emerald"
+                subtitle="Positive outcomes"
+                trend={5}
+              />
+              <StatCard 
+                title="Avg. Rating" 
+                value={mentorshipStats.avgRating} 
+                icon={<Star size={24} />} 
+                color="amber"
+                subtitle="Mentor satisfaction"
+                trend={2}
+              />
+            </div>
+            
+            {/* Mentor Cards */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mentorships.map((mentor, idx) => (
-                <div key={idx} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white font-semibold text-lg">
-                      {mentor.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900">{mentor.name}</h3>
-                      <p className="text-sm text-gray-600">{mentor.role}</p>
-                      <p className="text-xs text-gray-500">{mentor.experience} experience</p>
-                    </div>
-                  </div>
-                  <div className="mb-4">
-                    <StatusBadge badge={mentor.badge} color={mentor.color} />
-                  </div>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {mentor.expertise.map((skill, skillIdx) => (
-                      <span key={skillIdx} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                  <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">
-                    Schedule Meeting
-                  </button>
-                </div>
+              {mentorships.map((mentor) => (
+                <MentorCard key={mentor.id} mentor={mentor} />
               ))}
             </div>
           </div>
@@ -963,48 +1252,60 @@ export default function NECAlumniAssociation() {
                     <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Placement Tracker</h2>
                     <p className="text-gray-600">Track placement activities and opportunities</p>
                   </div>
-                  <button 
-                    onClick={() => setShowAddForm(true)}
-                    className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap">
-                    Add Application
-                  </button>
+                  <div className="flex gap-3">
+                    <button className="flex items-center gap-2 bg-white text-gray-700 px-4 py-2 rounded-lg border border-gray-300 font-medium hover:bg-gray-50 transition-colors">
+                      <Filter size={18} />
+                      Filter
+                    </button>
+                    <button 
+                      onClick={() => setShowAddForm(true)}
+                      className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2">
+                      <Briefcase size={18} />
+                      Add Application
+                    </button>
+                  </div>
                 </div>
                 
+                {/* Placement Stats */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <StatCard 
+                    title="Offers Received" 
+                    value={dashboardMetrics.placementOffers} 
+                    icon={<Award size={24} />} 
+                    color="emerald"
+                    subtitle="Successful placements"
+                    trend={12}
+                  />
+                  <StatCard 
+                    title="In Progress" 
+                    value={dashboardMetrics.placementProgress} 
+                    icon={<TrendingUp size={24} />} 
+                    color="blue"
+                    subtitle="Ongoing applications"
+                    trend={8}
+                  />
+                  <StatCard 
+                    title="Avg. Package" 
+                    value={dashboardMetrics.avgPackage} 
+                    icon={<Zap size={24} />} 
+                    color="amber"
+                    subtitle="Annual compensation"
+                    trend={15}
+                  />
+                  <StatCard 
+                    title="Total Applicants" 
+                    value={placements.length} 
+                    icon={<Users size={24} />} 
+                    color="purple"
+                    subtitle="Active candidates"
+                    trend={22}
+                  />
+                </div>
+                
+                {/* Placement Cards */}
                 <div className="grid md:grid-cols-2 gap-6">
-                  {placements.map((placement, idx) => (
-                    <div key={idx} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-600 rounded-xl flex items-center justify-center text-white font-semibold">
-                            {placement.name.split(' ').map(n => n[0]).join('')}
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-gray-900">{placement.name}</h3>
-                            <p className="text-sm text-gray-600">{placement.company}</p>
-                            <p className="text-xs text-gray-500">{placement.role}</p>
-                          </div>
-                        </div>
-                        <StatusBadge badge={placement.badge} color={placement.color} />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4 mb-4">
-                        <div className="text-center p-3 bg-gray-50 rounded-lg">
-                          <div className="text-sm text-gray-600">Package</div>
-                          <div className="font-semibold text-gray-900">{placement.package}</div>
-                        </div>
-                        <div className="text-center p-3 bg-gray-50 rounded-lg">
-                          <div className="text-sm text-gray-600">Status</div>
-                          <div className="font-semibold text-gray-900">{placement.status}</div>
-                        </div>
-                      </div>
-                      <div className="flex gap-3">
-                        <button className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">
-                          View Profile
-                        </button>
-                        <button className="flex-1 bg-gray-100 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors">
-                          Contact
-                        </button>
-                      </div>
-                    </div>
+                  {placements.map((placement) => (
+                    <PlacementCard key={placement.id} placement={placement} />
                   ))}
                 </div>
               </>
@@ -1125,7 +1426,7 @@ export default function NECAlumniAssociation() {
                       </button>
                       <button
                         type="submit"
-                        className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                        className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-colors"
                       >
                         Submit Company
                       </button>
